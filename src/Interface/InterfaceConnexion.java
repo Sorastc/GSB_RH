@@ -64,7 +64,8 @@ public class InterfaceConnexion extends JFrame {
 	                    return;
 	                }
 
-	                String mdpEnBase = DAO.UtilisateurDAO.recupMdpByLogin(login);
+	                DAO.UtilisateurDAO dao = new DAO.UtilisateurDAO();
+	                String mdpEnBase = dao.recupMdpByLogin(login);
 
 	                if (mdpEnBase == null) {
 	                    JOptionPane.showMessageDialog(null, "Login introuvable.",
@@ -78,7 +79,7 @@ public class InterfaceConnexion extends JFrame {
 	                    return;
 	                }
 
-	                Utilisateur user = DAO.UtilisateurDAO.recupUserByLogin(login);
+	                Utilisateur user = dao.recupUserByLogin(login);
 	                Role role = user.getRole();
 
 	                JOptionPane.showMessageDialog(null, "Bienvenue " + user.getPrenom() + " !",
@@ -86,14 +87,14 @@ public class InterfaceConnexion extends JFrame {
 	                
 	                InterfaceConnexion.this.dispose();
 
-	                if (role.equals("S")) {
-	                    MenuSecretaireRH fenetreMenu = new MenuSecretaireRH();
+	                if (role.getIdRole().equals("S")) {
+	                	MenuSecretaireRH fenetreMenu = new MenuSecretaireRH();
 	                    fenetreMenu.setVisible(true);
-	                } else if (role.equals("D")) {
-	                    MenuDirecteurRH fenetreJoueur = new MenuDirecteurRH();
+	                } else if (role.getIdRole().equals("D")) {
+	                	MenuDirecteurRH fenetreJoueur = new MenuDirecteurRH();
 	                    fenetreJoueur.setVisible(true);
-	                }else if (role.equals("R")) {
-	                    MenuResponsableSuiviFrais fenetreJoueur = new MenuResponsableSuiviFrais();
+	                }else if (role.getIdRole().equals("R")) {
+	                	MenuResponsableSuiviFrais fenetreJoueur = new MenuResponsableSuiviFrais();
 	                    fenetreJoueur.setVisible(true);
 	                   }
 	                else {
