@@ -84,21 +84,18 @@ public class InterfaceConnexion extends JFrame {
 	                JOptionPane.showMessageDialog(null, "Bienvenue " + user.getPrenom() + " !",
 	                        "Connexion réussie", JOptionPane.INFORMATION_MESSAGE);
 	                
-	                // Récupère la fenêtre parente pour pouvoir la fermer
-	                JFrame fenetreActuelle = (JFrame) SwingUtilities.getWindowAncestor(InterfaceConnexion.this);
+	                InterfaceConnexion.this.dispose();
 
 	                if (role.equals("S")) {
 	                    MenuSecretaireRH fenetreMenu = new MenuSecretaireRH();
 	                    fenetreMenu.setVisible(true);
-	                    fenetreActuelle.dispose();
 	                } else if (role.equals("D")) {
 	                    MenuDirecteurRH fenetreJoueur = new MenuDirecteurRH();
 	                    fenetreJoueur.setVisible(true);
-	                    fenetreActuelle.dispose();
 	                }else if (role.equals("R")) {
 	                    MenuResponsableSuiviFrais fenetreJoueur = new MenuResponsableSuiviFrais();
 	                    fenetreJoueur.setVisible(true);
-	                    fenetreActuelle.dispose();}
+	                   }
 	                else {
 	                    JOptionPane.showMessageDialog(null, "Rôle inconnu, contactez un administrateur.",
 	                            "Erreur", JOptionPane.ERROR_MESSAGE);
