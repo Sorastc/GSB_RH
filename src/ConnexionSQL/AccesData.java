@@ -6,6 +6,9 @@ import POJO.*;
 import ConnexionSQL.Connexion;
 
 
+/**
+ * The Class AccesData.
+ */
 public class AccesData {
 
 }

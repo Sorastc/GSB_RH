@@ -8,13 +8,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import POJO.Utilisateur;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UtilisateurDAO.
+ */
 public class UtilisateurDAO extends DAO<Utilisateur> {
+	
+	/** The con. */
 	Connection con;
 
+	/**
+	 * Instantiates a new utilisateur DAO.
+	 */
 	public UtilisateurDAO() {
 		this.con = connect;
 	}
 
+/**
+ * Creates the.
+ *
+ * @param user the user
+ * @return true, if successful
+ */
 //	@Override
 	public boolean create(Utilisateur user) {
 		// Requête SQL avec les bons champs et des paramètres
@@ -41,6 +56,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param user the user
+	 * @return true, if successful
+	 */
 	public boolean delete(Utilisateur user) {
 		String sql = "DELETE FROM utilisateur WHERE idUtilisateur = '" + user + "'";
 		try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
@@ -53,6 +74,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param user the user
+	 * @return true, if successful
+	 */
 	@Override
 
 	public boolean update(Utilisateur user) {
@@ -77,6 +104,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/**
+	 * Find.
+	 *
+	 * @param id the id
+	 * @return the utilisateur
+	 */
 	@Override
 	public Utilisateur find(int id) {
 		RoleDAO role = new RoleDAO();
@@ -97,6 +130,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		return null;
 	}
 
+	/**
+	 * Recup tous les users.
+	 *
+	 * @return the array list
+	 */
 	public ArrayList<Utilisateur> RecupTousLesUsers() {
 		RoleDAO role = new RoleDAO();
 		RegionDAO region = new RegionDAO();
@@ -122,6 +160,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		return null;
 	}
 
+	/**
+	 * Recup mdp by login.
+	 *
+	 * @param login the login
+	 * @return the string
+	 */
 	public String recupMdpByLogin(String login) {
 		String sql = "SELECT mdp FROM utilisateur WHERE login = '" + login + "'";
 		try (Statement statement = con.createStatement()) {

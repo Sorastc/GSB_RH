@@ -4,8 +4,15 @@ import java.util.Scanner;
 
 import DAO.UtilisateurDAO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InterfaceConnexion.
+ */
 public class InterfaceConnexion {
 	
+	/**
+	 * Connexion.
+	 */
 	public static void Connexion() {
 		Scanner sc = new Scanner(System.in);
         UtilisateurDAO userDAO = new UtilisateurDAO();
@@ -26,6 +33,10 @@ public class InterfaceConnexion {
         }
         sc.close();
 	}
+	
+	/**
+	 * Consulter utilisateur.
+	 */
 	public static void ConsulterUtilisateur() {
 		
 	}
