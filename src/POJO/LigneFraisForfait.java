@@ -5,6 +5,7 @@ import java.util.ArrayList;
 // TODO: Auto-generated Javadoc
 /**
  * The Class LigneFraisForfait.
+ * @author harich-s
  */
 public class LigneFraisForfait {
 	

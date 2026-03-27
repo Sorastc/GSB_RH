@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 // TODO: Auto-generated Javadoc
 /**
  * The Class FraisForfait.
+ * @author harich-s
  */
 public class FraisForfait {
 	

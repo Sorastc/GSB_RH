@@ -5,12 +5,13 @@ import POJO.Region;
 // TODO: Auto-generated Javadoc
 /**
  * The Class RegionDAO.
+ * @author harich-s
  */
 public class RegionDAO extends DAO<Region> {
 
 	/**
-	 * Creates the.
-	 *
+	 * Création d'une région.
+	 * 
 	 * @param obj the obj
 	 * @return true, if successful
 	 */
@@ -21,7 +22,7 @@ public class RegionDAO extends DAO<Region> {
 	}
 
 	/**
-	 * Delete.
+	 * Suppression d'une région.
 	 *
 	 * @param obj the obj
 	 * @return true, if successful
@@ -33,7 +34,7 @@ public class RegionDAO extends DAO<Region> {
 	}
 
 	/**
-	 * Update.
+	 * Mise à jour d'une région.
 	 *
 	 * @param obj the obj
 	 * @return true, if successful

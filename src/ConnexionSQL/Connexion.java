@@ -7,6 +7,7 @@ import java.sql.SQLException;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Connexion.
+ * @author harich-s
  */
 public class Connexion {
 	

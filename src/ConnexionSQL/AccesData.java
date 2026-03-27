@@ -8,6 +8,7 @@ import ConnexionSQL.Connexion;
 
 /**
  * The Class AccesData.
+ * @author harich-s
  */
 public class AccesData {
 

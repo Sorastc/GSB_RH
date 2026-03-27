@@ -6,6 +6,7 @@ import java.time.LocalDate;
 // TODO: Auto-generated Javadoc
 /**
  * The Class LigneFraisHorsForfait.
+ * @author harich-s
  */
 public class LigneFraisHorsForfait {
 	

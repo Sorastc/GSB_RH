@@ -5,7 +5,7 @@ import ConnexionSQL.Connexion;
 // TODO: Auto-generated Javadoc
 /**
  * The Class DAO.
- *
+ * @author harich-s
  * @param <T> the generic type
  */
 public abstract class DAO<T> {
@@ -14,7 +14,7 @@ public abstract class DAO<T> {
   	protected Connection connect;
 	  
   	/**
-  	 * Instantiates a new dao.
+  	 * Instentiation d'un nouveau dao.
   	 */
   	public DAO(){
 	    this.connect = Connexion.getInstance();

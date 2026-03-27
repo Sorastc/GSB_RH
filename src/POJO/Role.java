@@ -3,6 +3,7 @@ package POJO;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Role.
+ * @author harich-s
  */
 public class Role {
 	

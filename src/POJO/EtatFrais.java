@@ -3,6 +3,7 @@ package POJO;
 // TODO: Auto-generated Javadoc
 /**
  * The Class EtatFrais.
+ * @author harich-s
  */
 public class EtatFrais {
 	

@@ -88,15 +88,15 @@ public class InterfaceConnexion extends JFrame {
 	                JFrame fenetreActuelle = (JFrame) SwingUtilities.getWindowAncestor(InterfaceConnexion.this);
 
 	                if (role.equals("S")) {
-	                    InterfaceMenu fenetreMenu = new InterfaceMenu();
+	                    MenuSecretaireRH fenetreMenu = new MenuSecretaireRH();
 	                    fenetreMenu.setVisible(true);
 	                    fenetreActuelle.dispose();
 	                } else if (role.equals("D")) {
-	                    InterfaceJoueur fenetreJoueur = new InterfaceJoueur();
+	                    MenuDirecteurRH fenetreJoueur = new MenuDirecteurRH();
 	                    fenetreJoueur.setVisible(true);
 	                    fenetreActuelle.dispose();
 	                }else if (role.equals("R")) {
-	                    InterfaceJoueur fenetreJoueur = new InterfaceJoueur();
+	                    MenuResponsableSuiviFrais fenetreJoueur = new MenuResponsableSuiviFrais();
 	                    fenetreJoueur.setVisible(true);
 	                    fenetreActuelle.dispose();}
 	                else {

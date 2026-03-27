@@ -5,6 +5,7 @@ import java.util.ArrayList;
 // TODO: Auto-generated Javadoc
 /**
  * The Class FicheFrais.
+ * @author harich-s
  */
 public class FicheFrais {
 	
