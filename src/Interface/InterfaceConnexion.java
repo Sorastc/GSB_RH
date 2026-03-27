@@ -21,13 +21,13 @@ public class InterfaceConnexion extends JFrame {
 
 	public InterfaceConnexion() {
 
-		setLayout(null);
-		add(getTxtEntrezVotreLogin());
-		add(getTxtEntrezVotreMot());
-		add(getBtnNewButton());
-		add(getLblNewLabel());
-		add(getLblLogin());
-		add(getLblNewLabel_1());
+		getContentPane().setLayout(null);
+		getContentPane().add(getTxtEntrezVotreLogin());
+		getContentPane().add(getTxtEntrezVotreMot());
+		getContentPane().add(getBtnNewButton());
+		getContentPane().add(getLblNewLabel());
+		getContentPane().add(getLblLogin());
+		getContentPane().add(getLblNewLabel_1());
 	}
 
 	public JTextField getTxtEntrezVotreLogin() {
