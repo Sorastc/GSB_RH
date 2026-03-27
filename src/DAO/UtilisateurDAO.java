@@ -154,4 +154,28 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 		return null;
 	}
+	public ArrayList<Utilisateur> RecupTousLesVisiteurs() {
+		RoleDAO role = new RoleDAO();
+		RegionDAO region = new RegionDAO();
+		try {
+			ArrayList<Utilisateur> listeVisiteur = new ArrayList<>();
+
+			Statement requete = (Statement) con.createStatement();
+			ResultSet resultat = requete.executeQuery("select * from utilisateur where idRole = 'V'");
+			while (resultat.next()) {
+				Utilisateur visiteur = new Utilisateur(resultat.getString("idUtilisateur"), resultat.getString("nom"),
+						resultat.getString("prenom"), role.findById(resultat.getString("idRole")),
+						resultat.getString("adresse"), resultat.getString("cp"), resultat.getString("ville"),
+						resultat.getString("NumTel"), resultat.getString("NumTelFixe"), resultat.getString("email"),
+						region.find(resultat.getInt("idRegion")));
+				listeVisiteur.add(visiteur);
+			}
+			return listeVisiteur;
+
+		} catch (SQLException e) {
+			System.out.println("problème d’accès à la base");
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
