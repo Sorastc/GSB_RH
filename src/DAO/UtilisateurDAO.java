@@ -8,28 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import POJO.Utilisateur;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class UtilisateurDAO.
- */
 public class UtilisateurDAO extends DAO<Utilisateur> {
-	
-	/** The con. */
-	Connection con;
+	static Connection con;
 
-	/**
-	 * Instantiates a new utilisateur DAO.
-	 */
 	public UtilisateurDAO() {
 		this.con = connect;
 	}
 
-/**
- * Creates the.
- *
- * @param user the user
- * @return true, if successful
- */
 //	@Override
 	public boolean create(Utilisateur user) {
 		// Requête SQL avec les bons champs et des paramètres
@@ -56,12 +41,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
 	}
 
-	/**
-	 * Delete.
-	 *
-	 * @param user the user
-	 * @return true, if successful
-	 */
 	public boolean delete(Utilisateur user) {
 		String sql = "DELETE FROM utilisateur WHERE idUtilisateur = '" + user + "'";
 		try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
@@ -74,12 +53,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
-	/**
-	 * Update.
-	 *
-	 * @param user the user
-	 * @return true, if successful
-	 */
 	@Override
 
 	public boolean update(Utilisateur user) {
@@ -104,12 +77,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
-	/**
-	 * Find.
-	 *
-	 * @param id the id
-	 * @return the utilisateur
-	 */
 	@Override
 	public Utilisateur find(int id) {
 		RoleDAO role = new RoleDAO();
@@ -130,11 +97,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		return null;
 	}
 
-	/**
-	 * Recup tous les users.
-	 *
-	 * @return the array list
-	 */
 	public ArrayList<Utilisateur> RecupTousLesUsers() {
 		RoleDAO role = new RoleDAO();
 		RegionDAO region = new RegionDAO();
@@ -145,7 +107,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 			ResultSet resultat = requete.executeQuery("select * from utilisateur");
 			while (resultat.next()) {
 				Utilisateur user = new Utilisateur(resultat.getString("idUtilisateur"), resultat.getString("nom"),
-						resultat.getString("prenom"), role.find(resultat.getInt("idRole")),
+						resultat.getString("prenom"), role.findById(resultat.getString("idRole")),
 						resultat.getString("adresse"), resultat.getString("cp"), resultat.getString("ville"),
 						resultat.getString("NumTel"), resultat.getString("NumTelFixe"), resultat.getString("email"),
 						region.find(resultat.getInt("idRegion")));
@@ -160,18 +122,32 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		return null;
 	}
 
-	/**
-	 * Recup mdp by login.
-	 *
-	 * @param login the login
-	 * @return the string
-	 */
-	public String recupMdpByLogin(String login) {
+	public static String recupMdpByLogin(String login) {
 		String sql = "SELECT mdp FROM utilisateur WHERE login = '" + login + "'";
 		try (Statement statement = con.createStatement()) {
 			ResultSet resultat = statement.executeQuery(sql);
 			if (resultat.next()) {
 				return resultat.getString("mdp");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Utilisateur recupUserByLogin(String login) {
+		RoleDAO role = new RoleDAO();
+		RegionDAO region = new RegionDAO();
+		String sql = "SELECT * FROM utilisateur WHERE login = '" + login + "'";
+		try (Statement statement = con.createStatement()) {
+			ResultSet resultat = statement.executeQuery(sql);
+			if (resultat.next()) {
+				Utilisateur user = new Utilisateur(resultat.getString("idUtilisateur"), resultat.getString("nom"),
+						resultat.getString("prenom"), role.findById(resultat.getString("idRole")),
+						resultat.getString("adresse"), resultat.getString("cp"), resultat.getString("ville"),
+						resultat.getString("NumTel"), resultat.getString("NumTelFixe"), resultat.getString("email"),
+						region.find(resultat.getInt("idRegion")));
+				return user;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -81,7 +81,7 @@ public class InterfaceConnexion extends JFrame {
 	                Utilisateur user = DAO.UtilisateurDAO.recupUserByLogin(login);
 	                Role role = user.getRole();
 
-	                JOptionPane.showMessageDialog(null, "Bienvenue " + user.getPrenomUtilisateur() + " !",
+	                JOptionPane.showMessageDialog(null, "Bienvenue " + user.getPrenom() + " !",
 	                        "Connexion réussie", JOptionPane.INFORMATION_MESSAGE);
 	                
 	                // Récupère la fenêtre parente pour pouvoir la fermer
