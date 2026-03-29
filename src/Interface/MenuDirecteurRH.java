@@ -7,21 +7,27 @@ import java.util.ArrayList;
 
 public class MenuDirecteurRH extends JFrame {
 
-    private DefaultListModel<String> listModel;
-    private JList<String> listeVisiteurs;
+    private DefaultListModel<Utilisateur> listModel;
+    private JList<Utilisateur> listeVisiteurs;
     private UtilisateurDAO utilisateurDAO;
 
     public MenuDirecteurRH() {
         utilisateurDAO = new UtilisateurDAO();
-
         listModel = new DefaultListModel<>();
         listeVisiteurs = new JList<>(listModel);
 
-
         chargerVisiteurs();
+        listeVisiteurs.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                Utilisateur visiteurSelectionne = listeVisiteurs.getSelectedValue();
+                if (visiteurSelectionne != null) {
+                    new CarteVisiteur(MenuDirecteurRH.this, visiteurSelectionne);
+                }
+            }
+        });
 
         add(new JScrollPane(listeVisiteurs), BorderLayout.CENTER);
-
         setTitle("Liste des Visiteurs");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,11 +36,10 @@ public class MenuDirecteurRH extends JFrame {
 
     private void chargerVisiteurs() {
         listModel.clear();
-        ArrayList<Utilisateur> listevisiteurs = utilisateurDAO.RecupTousLesVisiteurs();
-
-        if (listevisiteurs != null) {
-            for (Utilisateur visiteur : listevisiteurs) {
-                listModel.addElement(visiteur.getNom() + " " + visiteur.getPrenom());
+        ArrayList<Utilisateur> liste = utilisateurDAO.RecupTousLesVisiteurs();
+        if (liste != null) {
+            for (Utilisateur v : liste) {
+                listModel.addElement(v);
             }
         }
     }
