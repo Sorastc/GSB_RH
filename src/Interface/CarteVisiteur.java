@@ -28,14 +28,14 @@ public class CarteVisiteur extends JDialog {
         corps.setBorder(new EmptyBorder(15, 20, 15, 20));
         corps.setBackground(Color.WHITE);
 
-        ajouterChamp(corps, "ID",          visiteur.getIdUtilisateur());
-        ajouterChamp(corps, "Email",        visiteur.getEmail());
-        ajouterChamp(corps, "Adresse",      visiteur.getAdressePo());
-        ajouterChamp(corps, "Ville",        visiteur.getVille() + " " + visiteur.getCp());
-        ajouterChamp(corps, "Mobile",       visiteur.getNumTel());
-        ajouterChamp(corps, "Fixe",          visiteur.getNumTelFixe());
-        ajouterChamp(corps, "Région",       visiteur.getRegion().getNomRegion());
-        ajouterChamp(corps, "Rôle",         visiteur.getRole().getLibelleRole());
+        ajouterChamp(corps, "ID", visiteur.getIdUtilisateur());
+        ajouterChamp(corps, "Email", visiteur.getEmail());
+        ajouterChamp(corps, "Adresse", visiteur.getAdressePo());
+        ajouterChamp(corps, "Ville", visiteur.getVille() + " " + visiteur.getCp());
+        ajouterChamp(corps, "Mobile", visiteur.getNumTel());
+        ajouterChamp(corps, "Fixe", visiteur.getNumTelFixe());
+        ajouterChamp(corps, "Région", visiteur.getRegion().getNomRegion());
+        ajouterChamp(corps, "Rôle", visiteur.getRole().getLibelleRole());
 
         JButton btnFermer = new JButton("Fermer");
         btnFermer.setBackground(new Color(52, 73, 94));
@@ -48,7 +48,7 @@ public class CarteVisiteur extends JDialog {
         piedPage.setBorder(new EmptyBorder(0, 0, 10, 0));
         piedPage.add(btnFermer);
 
-        // ── Assemblage ────────────────────────────────────────
+
         add(entete, BorderLayout.NORTH);
         add(corps,  BorderLayout.CENTER);
         add(piedPage, BorderLayout.SOUTH);
