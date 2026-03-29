@@ -35,7 +35,7 @@ public class CarteVisiteur extends JDialog {
         ajouterChamp(corps, "Mobile",       visiteur.getNumTel());
         ajouterChamp(corps, "Fixe",          visiteur.getNumTelFixe());
         ajouterChamp(corps, "Région",       visiteur.getRegion().getNomRegion());
-        ajouterChamp(corps, "🏷 Rôle",         visiteur.getRole().getLibelleRole());
+        ajouterChamp(corps, "Rôle",         visiteur.getRole().getLibelleRole());
 
         JButton btnFermer = new JButton("Fermer");
         btnFermer.setBackground(new Color(52, 73, 94));
