@@ -29,10 +29,10 @@ public class MenuDirecteurRH extends JFrame {
 
     private void chargerVisiteurs() {
         listModel.clear();
-        ArrayList<Utilisateur> visiteurs = utilisateurDAO.RecupTousLesVisiteurs();
+        ArrayList<Utilisateur> listevisiteurs = utilisateurDAO.RecupTousLesVisiteurs();
 
-        if (visiteurs != null) {
-            for (Utilisateur visiteur : visiteurs) {
+        if (listevisiteurs != null) {
+            for (Utilisateur visiteur : listevisiteurs) {
                 listModel.addElement(visiteur.getNom() + " " + visiteur.getPrenom());
             }
         }
