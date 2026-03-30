@@ -12,8 +12,10 @@ import POJO.Region;
  * @author harich-s
  */
 public class RegionDAO extends DAO<Region> {
-	static Connection con;
-
+	Connection con;
+	public RegionDAO() {
+		this.con = connect;
+	}
 	/**
 	 * Création d'une région.
 	 * 
@@ -57,20 +59,22 @@ public class RegionDAO extends DAO<Region> {
 	 * @return the region
 	 */
 	@Override
-	public Region find(int id) {
-	    String sql = "SELECT * FROM region WHERE region_id = " + id;
-	    try (java.sql.Statement statement = con.createStatement()) {
-	        ResultSet resultat = statement.executeQuery(sql);
-	        if (resultat.next()) {
-	            return new Region(
-	                resultat.getInt("region_id"),
-	                resultat.getString("region_nom")
-	            );
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
-	}
+    public Region find(int id) {
+        String sql = "SELECT * FROM region WHERE region_id = " + id;
+
+        try (java.sql.Statement statement = con.createStatement()) {
+            ResultSet resultat = statement.executeQuery(sql);
+            if (resultat.next()) {
+                return new Region(
+                    resultat.getInt("region_id"),
+                    resultat.getString("region_nom")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
