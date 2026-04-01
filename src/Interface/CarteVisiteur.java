@@ -1,73 +1,118 @@
 package Interface;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import POJO.Utilisateur;
-import java.awt.*;
 
-public class CarteVisiteur extends JDialog {
+public class CarteVisiteur extends JFrame {
+
+    private Utilisateur visiteur;
+
+
+    private JLabel lblNomPrenom;
+    private JLabel lblIdVal, lblEmailVal, lblAdresseVal;
+    private JLabel lblVilleVal, lblMobileVal, lblFixeVal;
+    private JLabel lblRegionVal, lblRoleVal;
 
     public CarteVisiteur(JFrame parent, Utilisateur visiteur) {
-        super(parent, "Fiche Visiteur", true);
+        this.visiteur = visiteur;
 
-        setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        construireUI();
+        remplirChamps();
 
-        
-        JPanel entete = new JPanel();
-        entete.setBackground(new Color(52, 73, 94));
-        entete.setBorder(new EmptyBorder(15, 15, 15, 15));
+        setLocationRelativeTo(parent);
+        setVisible(true);
+    }
 
-        JLabel nomLabel = new JLabel(visiteur.getNom() + " " + visiteur.getPrenom());
-        nomLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        nomLabel.setForeground(Color.WHITE);
-        entete.add(nomLabel);
+    private void construireUI() {
 
-        
-        JPanel corps = new JPanel(new GridLayout(0, 2, 10, 8));
-        corps.setBorder(new EmptyBorder(15, 20, 15, 20));
-        corps.setBackground(Color.WHITE);
 
-        ajouterChamp(corps, "ID", visiteur.getIdUtilisateur());
-        ajouterChamp(corps, "Email", visiteur.getEmail());
-        ajouterChamp(corps, "Adresse", visiteur.getAdressePo());
-        ajouterChamp(corps, "Ville", visiteur.getVille() + " " + visiteur.getCp());
-        ajouterChamp(corps, "Mobile", visiteur.getNumTel());
-        ajouterChamp(corps, "Fixe", visiteur.getNumTelFixe());
-        ajouterChamp(corps, "Région", visiteur.getRegion().getNomRegion());
-        ajouterChamp(corps, "Rôle", visiteur.getRole().getLibelleRole());
+        lblNomPrenom = new JLabel("", SwingConstants.CENTER);
+        lblNomPrenom.setFont(new Font("Arial", Font.BOLD, 20));
+        lblNomPrenom.setForeground(Color.WHITE);
+
+        JPanel panelEntete = new JPanel(new BorderLayout());
+        panelEntete.setBounds(0, 0, 474, 54);
+        panelEntete.setBackground(new Color(52, 73, 94));
+        panelEntete.setBorder(new EmptyBorder(15, 15, 15, 15));
+        panelEntete.add(lblNomPrenom, BorderLayout.CENTER);
+
+
+        JPanel panelCorps = new JPanel(new GridLayout(0, 2, 10, 10));
+        panelCorps.setBounds(0, 64, 464, 241);
+        panelCorps.setBackground(Color.WHITE);
+        panelCorps.setBorder(new EmptyBorder(20, 25, 20, 25));
+
+        lblIdVal      = new JLabel();
+        lblIdVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblEmailVal   = new JLabel();
+        lblEmailVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblAdresseVal = new JLabel();
+        lblAdresseVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblVilleVal   = new JLabel();
+        lblVilleVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblMobileVal  = new JLabel();
+        lblMobileVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblFixeVal    = new JLabel();
+        lblFixeVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblRegionVal  = new JLabel();
+        lblRegionVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        lblRoleVal    = new JLabel();
+        lblRoleVal.setFont(new Font("Tahoma", Font.PLAIN, 10));
+
+        panelCorps.add(creerTitre("ID"));           panelCorps.add(lblIdVal);
+        panelCorps.add(creerTitre("Email"));        panelCorps.add(lblEmailVal);
+        panelCorps.add(creerTitre("Adresse"));      panelCorps.add(lblAdresseVal);
+        panelCorps.add(creerTitre("Ville"));        panelCorps.add(lblVilleVal);
+        panelCorps.add(creerTitre("Mobile"));       panelCorps.add(lblMobileVal);
+        panelCorps.add(creerTitre("Fixe"));         panelCorps.add(lblFixeVal);
+        panelCorps.add(creerTitre("Région"));       panelCorps.add(lblRegionVal);
+        panelCorps.add(creerTitre("Rôle"));         panelCorps.add(lblRoleVal);
+
 
         JButton btnFermer = new JButton("Fermer");
         btnFermer.setBackground(new Color(52, 73, 94));
         btnFermer.setForeground(Color.WHITE);
         btnFermer.setFocusPainted(false);
+        btnFermer.setFont(new Font("Arial", Font.BOLD, 13));
         btnFermer.addActionListener(e -> dispose());
 
-        JPanel piedPage = new JPanel();
-        piedPage.setBackground(Color.WHITE);
-        piedPage.setBorder(new EmptyBorder(0, 0, 10, 0));
-        piedPage.add(btnFermer);
+        JPanel panelPied = new JPanel();
+        panelPied.setBounds(0, 354, 474, 54);
+        panelPied.setBackground(Color.WHITE);
+        panelPied.setBorder(new EmptyBorder(0, 0, 10, 0));
+        panelPied.add(btnFermer);
 
 
-        add(entete, BorderLayout.NORTH);
-        add(corps,  BorderLayout.CENTER);
-        add(piedPage, BorderLayout.SOUTH);
+        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setLayout(null);
+        getContentPane().add(panelEntete);
+        getContentPane().add(panelCorps);
+        getContentPane().add(panelPied);
 
-        setSize(420, 350);
-        setLocationRelativeTo(parent);
+        setTitle("Fiche Visiteur");
+        setSize(490, 458);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setVisible(true);
     }
 
-    private void ajouterChamp(JPanel panel, String label, String valeur) {
-        JLabel lbl = new JLabel(label);
-        lbl.setFont(new Font("Arial", Font.BOLD, 13));
+    private void remplirChamps() {
+        lblNomPrenom.setText(visiteur.getNom() + " " + visiteur.getPrenom());
+        lblIdVal.setText(visiteur.getIdUtilisateur() != null ? visiteur.getIdUtilisateur() : "—");
+        lblEmailVal.setText(visiteur.getEmail() != null ? visiteur.getEmail() : "—");
+        lblAdresseVal.setText(visiteur.getAdressePo() != null ? visiteur.getAdressePo() : "—");
+        lblVilleVal.setText(visiteur.getVille() != null ? visiteur.getVille() + " " + visiteur.getCp() : "—");
+        lblMobileVal.setText(visiteur.getNumTel() != null ? visiteur.getNumTel() : "—");
+        lblFixeVal.setText(visiteur.getNumTelFixe() != null ? visiteur.getNumTelFixe() : "—");
+        lblRegionVal.setText(visiteur.getRegion() != null ? visiteur.getRegion().getNomRegion() : "—");
+        lblRoleVal.setText(visiteur.getRole() != null ? visiteur.getRole().getLibelleRole() : "—");
+    }
+
+    private JLabel creerTitre(String texte) {
+        JLabel lbl = new JLabel(texte);
+        lbl.setFont(new Font("Arial", Font.BOLD, 12));
         lbl.setForeground(new Color(52, 73, 94));
-
-        JLabel val = new JLabel(valeur != null ? valeur : "—");
-        val.setFont(new Font("Arial", Font.PLAIN, 13));
-
-        panel.add(lbl);
-        panel.add(val);
+        return lbl;
     }
 }

@@ -51,7 +51,7 @@ public class InterfaceConnexion extends JFrame {
 	public JButton getBtnNewButton() {
 	    if (btnNewButton == null) {
 	        btnNewButton = new JButton("Connexion");
-	        btnNewButton.setBounds(338, 274, 89, 23);
+	        btnNewButton.setBounds(329, 276, 122, 23);
 	        btnNewButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -126,7 +126,7 @@ public class InterfaceConnexion extends JFrame {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("Connexion");
 			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 68));
-			lblNewLabel_1.setBounds(111, 40, 363, 59);
+			lblNewLabel_1.setBounds(123, 41, 363, 59);
 		}
 		return lblNewLabel_1;
 	}
