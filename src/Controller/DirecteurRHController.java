@@ -11,7 +11,7 @@ import POJO.Utilisateur;
  * La vue ne connaît pas le DAO — elle passe uniquement par ce contrôleur.
  */
 public class DirecteurRHController {
-
+//yuaduiadaoizda
     private UtilisateurDAO utilisateurDAO;
 
     public DirecteurRHController() {
