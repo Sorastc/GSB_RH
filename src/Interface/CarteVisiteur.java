@@ -105,14 +105,14 @@ public class CarteVisiteur extends JFrame {
 
         // Les boutons CRUD ne sont visibles que pour le rôle "S" (secrétaire / admin)
         if ("S".equals(idRoleConnecte)) {
-            JButton btnAjouter = new JButton("Ajouter");
-            btnAjouter.setBounds(10, 20, 110, 23);
-            btnAjouter.addActionListener(e -> {
-                // TODO : action ajout
-            });
+//            JButton btnAjouter = new JButton("Ajouter");
+//            btnAjouter.setBounds(10, 20, 110, 23);
+//            btnAjouter.addActionListener(e -> {
+//                // TODO : action ajout
+//            });
 
             JButton btnModifier = new JButton("Modification");
-            btnModifier.setBounds(181, 20, 110, 23);
+            btnModifier.setBounds(10, 20, 110, 23);
             btnModifier.addActionListener(e -> {
                 // TODO : action modification
             });
@@ -123,7 +123,7 @@ public class CarteVisiteur extends JFrame {
                 // TODO : action suppression
             });
 
-            panel.add(btnAjouter);
+//            panel.add(btnAjouter);
             panel.add(btnModifier);
             panel.add(btnSupprimer);
         }
@@ -133,7 +133,7 @@ public class CarteVisiteur extends JFrame {
 
     private JButton creerBoutonFermer() {
         JButton btn = new JButton("Fermer");
-        btn.setBounds(194, 329, 78, 24);
+        btn.setBounds(186, 329, 100, 24);
         btn.setBackground(new Color(52, 73, 94));
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
