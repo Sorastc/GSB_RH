@@ -7,7 +7,7 @@ import POJO.Utilisateur;
 
 /**
  * Contrôleur du Directeur RH.
- * Fait le lien entre la vue (MenuDirecteurRH) et la couche DAO.
+ * Fait le lien entre la vue (ListeVisiteur) et la couche DAO.
  * La vue ne connaît pas le DAO — elle passe uniquement par ce contrôleur.
  */
 public class ListeVisiteurController {
