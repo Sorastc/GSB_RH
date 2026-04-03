@@ -1,133 +1,165 @@
 package Interface;
-import javax.swing.*;
-
-import POJO.Role;
-import POJO.Utilisateur;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import DAO.UtilisateurDAO;
+import POJO.Utilisateur;
+
 public class InterfaceConnexion extends JFrame {
 
-	private JTextField txtEntrezVotreLogin;
-	private JPasswordField txtEntrezVotreMot;
-	private JButton btnNewButton;
-	private JLabel lblNewLabel;
-	private JLabel lblLogin;
-	private JLabel lblNewLabel_1;
+    private JTextField     txtLogin;
+    private JPasswordField txtMotDePasse;
+    private JButton        btnConnexion;
+    private JLabel         lblTitre;
+    private JLabel         lblLogin;
+    private JLabel         lblMotDePasse;
 
-	
+    public InterfaceConnexion() {
+        setTitle("Connexion");
+        setSize(550, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        getContentPane().setLayout(null);
 
-	public InterfaceConnexion() {
+        getContentPane().add(getTxtLogin());
+        getContentPane().add(getTxtMotDePasse());
+        getContentPane().add(getBtnConnexion());
+        getContentPane().add(getLblTitre());
+        getContentPane().add(getLblLogin());
+        getContentPane().add(getLblMotDePasse());
+    }
 
-		getContentPane().setLayout(null);
-		getContentPane().add(getTxtEntrezVotreLogin());
-		getContentPane().add(getTxtEntrezVotreMot());
-		getContentPane().add(getBtnNewButton());
-		getContentPane().add(getLblNewLabel());
-		getContentPane().add(getLblLogin());
-		getContentPane().add(getLblNewLabel_1());
-	}
+    // -------------------------------------------------------------------------
+    // Composants
+    // -------------------------------------------------------------------------
 
-	public JTextField getTxtEntrezVotreLogin() {
-		if (txtEntrezVotreLogin == null) {
-			txtEntrezVotreLogin = new JTextField();
-			txtEntrezVotreLogin.setBounds(138, 166, 139, 20);
-			txtEntrezVotreLogin.setColumns(10);
-		}
-		return txtEntrezVotreLogin;
-	}
+    private JLabel getLblTitre() {
+        if (lblTitre == null) {
+            lblTitre = new JLabel("Connexion");
+            lblTitre.setFont(new Font("Tahoma", Font.BOLD, 68));
+            lblTitre.setBounds(123, 41, 363, 59);
+        }
+        return lblTitre;
+    }
 
-	public JPasswordField getTxtEntrezVotreMot() {
-		if (txtEntrezVotreMot == null) {
-			txtEntrezVotreMot = new JPasswordField();
-			txtEntrezVotreMot.setColumns(10);
-			txtEntrezVotreMot.setBounds(138, 210, 139, 20);
-		}
-		return txtEntrezVotreMot;
-	}
+    private JLabel getLblLogin() {
+        if (lblLogin == null) {
+            lblLogin = new JLabel("Login :");
+            lblLogin.setBounds(138, 151, 139, 14);
+        }
+        return lblLogin;
+    }
 
-	public JButton getBtnNewButton() {
-	    if (btnNewButton == null) {
-	        btnNewButton = new JButton("Connexion");
-	        btnNewButton.setBounds(329, 276, 122, 23);
-	        btnNewButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                String login = txtEntrezVotreLogin.getText().trim();
-	                String motDePasse = new String(txtEntrezVotreMot.getPassword()).trim();
+    private JLabel getLblMotDePasse() {
+        if (lblMotDePasse == null) {
+            lblMotDePasse = new JLabel("Mot de passe :");
+            lblMotDePasse.setBounds(138, 196, 139, 14);
+        }
+        return lblMotDePasse;
+    }
 
-	                if (login.isEmpty() || motDePasse.isEmpty()) {
-	                    JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.",
-	                            "Champs manquants", JOptionPane.WARNING_MESSAGE);
-	                    return;
-	                }
+    private JTextField getTxtLogin() {
+        if (txtLogin == null) {
+            txtLogin = new JTextField();
+            txtLogin.setBounds(138, 166, 139, 20);
+            txtLogin.setColumns(10);
+        }
+        return txtLogin;
+    }
 
-	                DAO.UtilisateurDAO dao = new DAO.UtilisateurDAO();
-	                String mdpEnBase = dao.recupMdpByLogin(login);
+    private JPasswordField getTxtMotDePasse() {
+        if (txtMotDePasse == null) {
+            txtMotDePasse = new JPasswordField();
+            txtMotDePasse.setColumns(10);
+            txtMotDePasse.setBounds(138, 210, 139, 20);
+        }
+        return txtMotDePasse;
+    }
 
-	                if (mdpEnBase == null) {
-	                    JOptionPane.showMessageDialog(null, "Login introuvable.",
-	                            "Erreur", JOptionPane.ERROR_MESSAGE);
-	                    return;
-	                }
+    private JButton getBtnConnexion() {
+        if (btnConnexion == null) {
+            btnConnexion = new JButton("Connexion");
+            btnConnexion.setBounds(329, 276, 122, 23);
+            btnConnexion.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    tenterConnexion();
+                }
+            });
+        }
+        return btnConnexion;
+    }
 
-	                if (!mdpEnBase.equals(motDePasse)) {
-	                    JOptionPane.showMessageDialog(null, "Mot de passe incorrect.",
-	                            "Erreur", JOptionPane.ERROR_MESSAGE);
-	                    return;
-	                }
+    // -------------------------------------------------------------------------
+    // Logique de connexion
+    // -------------------------------------------------------------------------
 
-	                Utilisateur user = dao.recupUserByLogin(login);
-	                Role role = user.getRole();
+    private void tenterConnexion() {
+        String login      = txtLogin.getText().trim();
+        String motDePasse = new String(txtMotDePasse.getPassword()).trim();
 
-	                JOptionPane.showMessageDialog(null, "Bienvenue " + user.getPrenom() + " !",
-	                        "Connexion réussie", JOptionPane.INFORMATION_MESSAGE);
-	                
-	                InterfaceConnexion.this.dispose();
+        if (login.isEmpty() || motDePasse.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Veuillez remplir tous les champs.",
+                "Champs manquants", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-	                if (role.getIdRole().equals("S")) {
-	                	MenuSecretaireRH fenetreMenu = new MenuSecretaireRH();
-	                    fenetreMenu.setVisible(true);
-	                } else if (role.getIdRole().equals("D")) {
-	                	MenuDirecteurRH fenetreJoueur = new MenuDirecteurRH();
-	                    fenetreJoueur.setVisible(true);
-	                }else if (role.getIdRole().equals("R")) {
-	                	MenuResponsableSuiviFrais fenetreJoueur = new MenuResponsableSuiviFrais();
-	                    fenetreJoueur.setVisible(true);
-	                   }
-	                else {
-	                    JOptionPane.showMessageDialog(null, "Rôle inconnu, contactez un administrateur.",
-	                            "Erreur", JOptionPane.ERROR_MESSAGE);
-	                }
-	            }
-	        });
-	    }
-	    return btnNewButton;
-	}
-	public JLabel getLblNewLabel() {
-		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("Mot de passe :");
-			lblNewLabel.setBounds(138, 196, 139, 14);
-		}
-		return lblNewLabel;
-	}
+        String mdpEnBase = UtilisateurDAO.recupMdpByLogin(login);
+        if (mdpEnBase == null) {
+            JOptionPane.showMessageDialog(this,
+                "Login introuvable.",
+                "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-	public JLabel getLblLogin() {
-		if (lblLogin == null) {
-			lblLogin = new JLabel("Login :");
-			lblLogin.setBounds(138, 151, 139, 14);
-		}
-		return lblLogin;
-	}
+        if (!mdpEnBase.equals(motDePasse)) {
+            JOptionPane.showMessageDialog(this,
+                "Mot de passe incorrect.",
+                "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-	public JLabel getLblNewLabel_1() {
-		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("Connexion");
-			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 68));
-			lblNewLabel_1.setBounds(123, 41, 363, 59);
-		}
-		return lblNewLabel_1;
-	}
+        Utilisateur user = UtilisateurDAO.recupUserByLogin(login);
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                "Impossible de charger les données utilisateur.",
+                "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+            "Bienvenue " + user.getPrenom() + " !",
+            "Connexion réussie", JOptionPane.INFORMATION_MESSAGE);
+
+        this.dispose();
+        ouvrirFenetrePourRole(user);   // ← on passe user, pas juste le rôle
+    }
+
+    // user est transmis à chaque fenêtre pour gérer les droits d'affichage
+    private void ouvrirFenetrePourRole(Utilisateur user) {
+        String idRole = user.getRole().getIdRole();
+        switch (idRole) {
+            case "S":
+            case "D":
+                new ListeVisteur(user).setVisible(true);
+                break;
+            case "R":
+                new MenuResponsableSuiviFrais(user).setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this,
+                    "Rôle inconnu, contactez un administrateur.",
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

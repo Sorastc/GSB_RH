@@ -11,7 +11,6 @@ import POJO.Utilisateur;
  * La vue ne connaît pas le DAO — elle passe uniquement par ce contrôleur.
  */
 public class DirecteurRHController {
-//yuaduiadaoizda
     private UtilisateurDAO utilisateurDAO;
 
     public DirecteurRHController() {
@@ -23,7 +22,7 @@ public class DirecteurRHController {
      * Garantit que la vue reçoit toujours une liste non nulle.
      */
     public ArrayList<Utilisateur> getVisiteurs() {
-        ArrayList<Utilisateur> liste = utilisateurDAO.RecupTousLesVisiteurs();
+        ArrayList<Utilisateur> liste = utilisateurDAO.recupTousLesUsers();
         return liste != null ? liste : new ArrayList<>();
     }
 

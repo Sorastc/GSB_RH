@@ -2,33 +2,32 @@ package Interface;
 
 import java.awt.Component;
 import java.awt.Font;
-import javax.swing.*;
-import POJO.Utilisateur;
-import Controller.DirecteurRHController;
 
-/**
- * Vue principale du Directeur RH.
- * Responsabilité unique : affichage + interactions utilisateur.
- * Toute logique métier est déléguée à DirecteurRHController.
- */
-public class MenuDirecteurRH extends JFrame {
-    private JScrollPane         jScrollPane1;
-    private JList<Utilisateur>  listeVisiteurs;
-    private JLabel              titreLabel;
-    private JButton             btnDeconnexion;
+import javax.swing.*;
+
+import Controller.DirecteurRHController;
+import POJO.Utilisateur;
+
+public class ListeVisteur extends JFrame {
+
+    private JScrollPane                   jScrollPane1;
+    private JList<Utilisateur>            listeVisiteurs;
+    private JLabel                        titreLabel;
+    private JButton                       btnDeconnexion;
     private DefaultListModel<Utilisateur> listModel;
 
+    private final DirecteurRHController controller;
+    private final Utilisateur           userConnecte;   // ← stocké ici
 
-    private DirecteurRHController controller;
-
-
-    public MenuDirecteurRH() {
-        controller = new DirecteurRHController();
-        listModel  = new DefaultListModel<>();
+    // Constructeur avec l'utilisateur connecté (depuis InterfaceConnexion)
+    public ListeVisteur(Utilisateur userConnecte) {
+        this.userConnecte = userConnecte;
+        this.controller   = new DirecteurRHController();
+        this.listModel    = new DefaultListModel<>();
         initComponents();
         chargerVisiteurs();
     }
-    
+
     private void initComponents() {
         setTitle("Menu Directeur RH");
         setSize(500, 500);
@@ -36,13 +35,11 @@ public class MenuDirecteurRH extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
 
-
         titreLabel = new JLabel("Liste des Visiteurs");
         titreLabel.setBounds(0, 20, 484, 40);
         titreLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titreLabel.setHorizontalAlignment(SwingConstants.CENTER);
         getContentPane().add(titreLabel);
-
 
         listeVisiteurs = new JList<>(listModel);
         listeVisiteurs.setCellRenderer(new DefaultListCellRenderer() {
@@ -56,6 +53,7 @@ public class MenuDirecteurRH extends JFrame {
                 return this;
             }
         });
+
         listeVisiteurs.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -67,7 +65,6 @@ public class MenuDirecteurRH extends JFrame {
         jScrollPane1.setBounds(75, 80, 350, 300);
         getContentPane().add(jScrollPane1);
 
-
         btnDeconnexion = new JButton("Déconnexion");
         btnDeconnexion.setBounds(195, 410, 115, 23);
         btnDeconnexion.addActionListener(e -> {
@@ -77,20 +74,17 @@ public class MenuDirecteurRH extends JFrame {
         getContentPane().add(btnDeconnexion);
     }
 
-
     private void chargerVisiteurs() {
         listModel.clear();
         for (Utilisateur v : controller.getVisiteurs()) {
             listModel.addElement(v);
         }
     }
+
     private void ouvrirCarteVisiteur() {
         Utilisateur selectionne = listeVisiteurs.getSelectedValue();
         if (selectionne != null) {
-            new CarteVisiteur(this, selectionne);
+            new CarteVisiteur(this, selectionne, userConnecte);  // ← noms corrects
         }
-    }
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(() -> new MenuDirecteurRH().setVisible(true));
     }
 }
