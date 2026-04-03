@@ -5,7 +5,7 @@ import java.awt.Font;
 
 import javax.swing.*;
 
-import Controller.DirecteurRHController;
+import Controller.ListeVisiteurController;
 import POJO.Utilisateur;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,13 +18,13 @@ public class ListeVisteur extends JFrame {
 	private JButton btnDeconnexion;
 	private DefaultListModel<Utilisateur> listModel;
 
-	private final DirecteurRHController controller;
+	private final ListeVisiteurController controller;
 	private final Utilisateur userConnecte; // ← stocké ici
 
 	// Constructeur avec l'utilisateur connecté (depuis InterfaceConnexion)
 	public ListeVisteur(Utilisateur userConnecte) {
 		this.userConnecte = userConnecte;
-		this.controller = new DirecteurRHController();
+		this.controller = new ListeVisiteurController();
 		this.listModel = new DefaultListModel<>();
 		initComponents();
 		chargerVisiteurs();

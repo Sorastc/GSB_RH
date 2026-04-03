@@ -10,10 +10,10 @@ import POJO.Utilisateur;
  * Fait le lien entre la vue (MenuDirecteurRH) et la couche DAO.
  * La vue ne connaît pas le DAO — elle passe uniquement par ce contrôleur.
  */
-public class DirecteurRHController {
+public class ListeVisiteurController {
     private UtilisateurDAO utilisateurDAO;
 
-    public DirecteurRHController() {
+    public ListeVisiteurController() {
         this.utilisateurDAO = new UtilisateurDAO();
     }
 
