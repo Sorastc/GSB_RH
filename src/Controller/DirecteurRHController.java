@@ -22,7 +22,7 @@ public class DirecteurRHController {
      * Garantit que la vue reçoit toujours une liste non nulle.
      */
     public ArrayList<Utilisateur> getVisiteurs() {
-        ArrayList<Utilisateur> liste = utilisateurDAO.recupTousLesUsers();
+        ArrayList<Utilisateur> liste = utilisateurDAO.recupTousLesVisiteurs();
         return liste != null ? liste : new ArrayList<>();
     }
 

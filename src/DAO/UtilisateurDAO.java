@@ -10,14 +10,8 @@ import ConnexionSQL.Connexion;
 import POJO.Utilisateur;
 
 public class UtilisateurDAO extends DAO<Utilisateur> {
-
-    // Connexion initialisée une seule fois via le singleton
     private static final Connection con = Connexion.getInstance();
-
-    // -------------------------------------------------------------------------
-    // CRUD
-    // -------------------------------------------------------------------------
-
+    
     @Override
     public boolean create(Utilisateur user) {
         String sql = "INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -90,9 +84,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // Requêtes métier
-    // -------------------------------------------------------------------------
 
     public static String recupMdpByLogin(String login) {
         String sql = "SELECT mdp FROM utilisateur WHERE login = ?";
