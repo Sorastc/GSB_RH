@@ -123,6 +123,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         return executerListeUtilisateurs(sql, "V");
     }
 
+    
+    
     // -------------------------------------------------------------------------
     // Méthodes utilitaires privées
     // -------------------------------------------------------------------------
