@@ -12,13 +12,13 @@ import java.sql.SQLException;
 public class Connexion {
 	
 	/** The Constant URL. */
-	private static final String URL = "jdbc:mysql://10.29.4.18:3306/gsb_frais2025?useSSL=false";
+	private static final String URL = "jdbc:mysql:http://localhost/phpmyadmin5.2.3/";
 	
 	/** The Constant UTILISATEUR. */
-	private static final String UTILISATEUR = "myroot";
+	private static final String UTILISATEUR = "root";
 	
 	/** The Constant MOT_DE_PASSE. */
-	private static final String MOT_DE_PASSE = "root123*";
+	private static final String MOT_DE_PASSE = "";
 	
 	/** The con. */
 	private static Connection con = null;
