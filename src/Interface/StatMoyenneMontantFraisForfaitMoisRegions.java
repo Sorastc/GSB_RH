@@ -1,41 +1,18 @@
 package Interface;
 
-import java.awt.EventQueue;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+public class StatMoyenneMontantFraisForfaitMoisRegions extends StatBaseMois {
 
-public class StatMoyenneMontantFraisForfaitMoisRegions extends JFrame {
+    public StatMoyenneMontantFraisForfaitMoisRegions() {
+        super(
+            "Moyenne forfait par région",
+            new String[]{"Région", "Nb visiteurs", "Moyenne forfait"}
+        );
+    }
 
-	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StatMoyenneMontantFraisForfaitMoisRegions frame = new StatMoyenneMontantFraisForfaitMoisRegions();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public StatMoyenneMontantFraisForfaitMoisRegions() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 721, 488);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-	}
-
+    @Override
+    protected ArrayList<String[]> getResultats(int mois, int annee) {
+        return statDAO.getMoyenneForfaitParRegion(mois, annee);
+    }
 }

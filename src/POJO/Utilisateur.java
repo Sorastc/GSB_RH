@@ -1,5 +1,7 @@
 package POJO;
 
+import java.time.LocalDate;
+
 public class Utilisateur {
 	private String idUtilisateur;
 	private String nom;
@@ -12,9 +14,13 @@ public class Utilisateur {
 	private String numTelFixe;
 	private String email;
 	private Region region;
-	
+	// mdp volontairement absent : il ne doit jamais circuler hors du DAO
+	private LocalDate dateEmbauche;
+
+	/** Constructeur complet (utilisé par le DAO lors de la lecture en BDD) */
 	public Utilisateur(String idUtilisateur, String nom, String prenom, Role role, String adressePo, String cp,
-			String ville, String numTel, String numTelFixe, String email, Region region) {
+			String ville, String numTel, String numTelFixe, String email, Region region,
+			LocalDate dateEmbauche) {
 		super();
 		this.idUtilisateur = idUtilisateur;
 		this.nom = nom;
@@ -27,6 +33,13 @@ public class Utilisateur {
 		this.numTelFixe = numTelFixe;
 		this.email = email;
 		this.region = region;
+		this.dateEmbauche = dateEmbauche;
+	}
+
+	/** Constructeur court : dateEmbauche à null (affichage seul, pas d'insertion) */
+	public Utilisateur(String idUtilisateur, String nom, String prenom, Role role, String adressePo, String cp,
+			String ville, String numTel, String numTelFixe, String email, Region region) {
+		this(idUtilisateur, nom, prenom, role, adressePo, cp, ville, numTel, numTelFixe, email, region, null);
 	}
 
 	public String getIdUtilisateur() {
@@ -117,11 +130,20 @@ public class Utilisateur {
 		this.region = region;
 	}
 
+	public java.time.LocalDate getDateEmbauche() {
+		return dateEmbauche;
+	}
+
+	public void setDateEmbauche(java.time.LocalDate dateEmbauche) {
+		this.dateEmbauche = dateEmbauche;
+	}
+
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom=" + nom + ", prenom=" + prenom + ", role=" + role
 				+ ", adressePo=" + adressePo + ", cp=" + cp + ", ville=" + ville + ", numTel=" + numTel
-				+ ", numTelFixe=" + numTelFixe + ", email=" + email + ", region=" + region + "]";
+				+ ", numTelFixe=" + numTelFixe + ", email=" + email + ", region=" + region
+				+ ", dateEmbauche=" + dateEmbauche + "]";
 	}
 	
 }

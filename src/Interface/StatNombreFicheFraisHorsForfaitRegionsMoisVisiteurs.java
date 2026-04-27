@@ -1,41 +1,18 @@
 package Interface;
 
-import java.awt.EventQueue;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+public class StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs extends StatBaseRegionMois {
 
-public class StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs extends JFrame {
+    public StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs() {
+        super(
+            "Nb fiches hors forfait par visiteur",
+            new String[]{"Nom", "Prénom", "Nb lignes HF"}
+        );
+    }
 
-	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs frame = new StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public StatNombreFicheFraisHorsForfaitRegionsMoisVisiteurs() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 730, 483);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-	}
-
+    @Override
+    protected ArrayList<String[]> getResultats(int idRegion, int mois, int annee) {
+        return statDAO.getNbFichesHFParVisiteur(idRegion, mois, annee);
+    }
 }

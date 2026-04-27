@@ -3,72 +3,34 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import POJO.Region;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class RegionDAO.
- * @author harich-s
- */
 public class RegionDAO extends DAO<Region> {
-	Connection con;
-	public RegionDAO() {
-		this.con = connect;
-	}
-	/**
-	 * Création d'une région.
-	 * 
-	 * @param obj the obj
-	 * @return true, if successful
-	 */
-	@Override
-	public boolean create(Region obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	/**
-	 * Suppression d'une région.
-	 *
-	 * @param obj the obj
-	 * @return true, if successful
-	 */
-	@Override
-	public boolean delete(Region obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    Connection con;
 
-	/**
-	 * Mise à jour d'une région.
-	 *
-	 * @param obj the obj
-	 * @return true, if successful
-	 */
-	@Override
-	public boolean update(Region obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public RegionDAO() {
+        this.con = connect;
+    }
 
-	/**
-	 * Find.
-	 *
-	 * @param id the id
-	 * @return the region
-	 */
-	@Override
+    @Override
+    public boolean create(Region obj) { return false; }
+
+    @Override
+    public boolean delete(Region obj) { return false; }
+
+    @Override
+    public boolean update(Region obj) { return false; }
+
+    @Override
     public Region find(int id) {
         String sql = "SELECT * FROM region WHERE region_id = " + id;
-
         try (java.sql.Statement statement = con.createStatement()) {
-            ResultSet resultat = statement.executeQuery(sql);
-            if (resultat.next()) {
-                return new Region(
-                    resultat.getInt("region_id"),
-                    resultat.getString("region_nom")
-                );
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                return new Region(rs.getInt("region_id"), rs.getString("region_nom"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,5 +38,18 @@ public class RegionDAO extends DAO<Region> {
         return null;
     }
 
-
+    /** Retourne toutes les régions triées par nom. */
+    public ArrayList<Region> findAll() {
+        ArrayList<Region> liste = new ArrayList<>();
+        String sql = "SELECT region_id, region_nom FROM region ORDER BY region_nom";
+        try (java.sql.Statement st = con.createStatement()) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                liste.add(new Region(rs.getInt("region_id"), rs.getString("region_nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
 }

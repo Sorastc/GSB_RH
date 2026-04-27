@@ -1,187 +1,113 @@
 package Interface;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
-import javax.swing.border.*;
-
-import POJO.Role;
 import POJO.Utilisateur;
 
 public class CarteVisiteur extends JFrame {
 
-    private final Utilisateur visiteur;
-    private final String      idRoleConnecte;   // rôle de l'utilisateur actuellement connecté
+    private Utilisateur visiteur;
+    private final ListeVisteur parentListe;
+    private final String idRoleConnecte;
 
     private JLabel lblNomPrenom;
     private JLabel lblIdVal, lblEmailVal, lblAdresseVal;
     private JLabel lblVilleVal, lblMobileVal, lblFixeVal;
-    private JLabel lblRegionVal, lblRoleVal;
+    private JLabel lblRegionVal, lblRoleVal, lblEmbaucheVal;
 
-    /**
-     * @param parent          fenêtre parente (pour le centrage)
-     * @param visiteur        le visiteur dont on affiche la fiche
-     * @param userConnecte    l'utilisateur actuellement connecté (pour les droits)
-     */
-    public CarteVisiteur(JFrame parent, Utilisateur visiteur, Utilisateur userConnecte) {
+    public CarteVisiteur(ListeVisteur parentListe, Utilisateur visiteur, Utilisateur userConnecte) {
+        this.parentListe    = parentListe;
         this.visiteur       = visiteur;
         this.idRoleConnecte = (userConnecte != null && userConnecte.getRole() != null)
-                              ? userConnecte.getRole().getIdRole()
-                              : "";
-
-        construireUI();
+                              ? userConnecte.getRole().getIdRole() : "";
+        initComponents();
         remplirChamps();
-
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(parentListe);
         setVisible(true);
     }
 
-    // -------------------------------------------------------------------------
-    // Construction de l'interface
-    // -------------------------------------------------------------------------
-
-    private void construireUI() {
-        setTitle("Fiche Visiteur");
-        setSize(490, 458);
+    private void initComponents() {
+        setTitle("Fiche visiteur");
+        setSize(420, 420);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        getContentPane().setBackground(Color.WHITE);
         getContentPane().setLayout(null);
 
-        getContentPane().add(creerPanelEntete());
-        getContentPane().add(creerPanelCorps());
-        getContentPane().add(creerPanelPied());
-        getContentPane().add(creerBoutonFermer());
-    }
-
-    private JPanel creerPanelEntete() {
         lblNomPrenom = new JLabel("", SwingConstants.CENTER);
-        lblNomPrenom.setFont(new Font("Arial", Font.BOLD, 20));
-        lblNomPrenom.setForeground(Color.WHITE);
+        lblNomPrenom.setFont(new Font("Arial", Font.BOLD, 16));
+        lblNomPrenom.setBounds(0, 10, 420, 25);
+        getContentPane().add(lblNomPrenom);
 
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBounds(0, 0, 474, 54);
-        panel.setBackground(new Color(52, 73, 94));
-        panel.setBorder(new EmptyBorder(15, 15, 15, 15));
-        panel.add(lblNomPrenom, BorderLayout.CENTER);
-        return panel;
-    }
+        JSeparator sep = new JSeparator();
+        sep.setBounds(20, 40, 380, 2);
+        getContentPane().add(sep);
 
-    private JPanel creerPanelCorps() {
-        lblIdVal      = creerValeur();
-        lblEmailVal   = creerValeur();
-        lblAdresseVal = creerValeur();
-        lblVilleVal   = creerValeur();
-        lblMobileVal  = creerValeur();
-        lblFixeVal    = creerValeur();
-        lblRegionVal  = creerValeur();
-        lblRoleVal    = creerValeur();
+        // Grille de labels : libellé à gauche, valeur à droite
+        String[] libelles = {"ID :", "Email :", "Adresse :", "Ville / CP :",
+                             "Mobile :", "Fixe :", "Région :", "Rôle :", "Embauche :"};
+        JLabel[] valeurs  = new JLabel[libelles.length];
 
-        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
-        panel.setBounds(0, 64, 464, 241);
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(new EmptyBorder(20, 25, 20, 25));
+        int y = 55;
+        for (int i = 0; i < libelles.length; i++) {
+            JLabel lbl = new JLabel(libelles[i]);
+            lbl.setFont(new Font("Arial", Font.BOLD, 12));
+            lbl.setBounds(20, y, 110, 20);
+            getContentPane().add(lbl);
 
-        panel.add(creerTitre("ID"));       panel.add(lblIdVal);
-        panel.add(creerTitre("Email"));    panel.add(lblEmailVal);
-        panel.add(creerTitre("Adresse"));  panel.add(lblAdresseVal);
-        panel.add(creerTitre("Ville"));    panel.add(lblVilleVal);
-        panel.add(creerTitre("Mobile"));   panel.add(lblMobileVal);
-        panel.add(creerTitre("Fixe"));     panel.add(lblFixeVal);
-        panel.add(creerTitre("Région"));   panel.add(lblRegionVal);
-        panel.add(creerTitre("Rôle"));     panel.add(lblRoleVal);
+            valeurs[i] = new JLabel();
+            valeurs[i].setFont(new Font("Arial", Font.PLAIN, 12));
+            valeurs[i].setBounds(135, y, 265, 20);
+            getContentPane().add(valeurs[i]);
 
-        return panel;
-    }
-
-    private JPanel creerPanelPied() {
-        JPanel panel = new JPanel();
-        panel.setBounds(0, 354, 474, 54);
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(new EmptyBorder(0, 0, 10, 0));
-        panel.setLayout(null);
-
-        // Les boutons CRUD ne sont visibles que pour le rôle "S" (secrétaire / admin)
-        if ("S".equals(idRoleConnecte)) {
-//            JButton btnAjouter = new JButton("Ajouter");
-//            btnAjouter.setBounds(10, 20, 110, 23);
-//            btnAjouter.addActionListener(e -> {
-//                // TODO : action ajout
-//            });
-
-            JButton btnModifier = new JButton("Modification");
-            btnModifier.setBounds(10, 20, 110, 23);
-            btnModifier.addActionListener(e -> {
-                // TODO : action modification
-            });
-
-            JButton btnSupprimer = new JButton("Suppression");
-            btnSupprimer.setBounds(354, 20, 110, 23);
-            btnSupprimer.addActionListener(e -> {
-                // TODO : action suppression
-            });
-
-//            panel.add(btnAjouter);
-            panel.add(btnModifier);
-            panel.add(btnSupprimer);
+            y += 28;
         }
 
-        return panel;
-    }
+        lblIdVal       = valeurs[0];
+        lblEmailVal    = valeurs[1];
+        lblAdresseVal  = valeurs[2];
+        lblVilleVal    = valeurs[3];
+        lblMobileVal   = valeurs[4];
+        lblFixeVal     = valeurs[5];
+        lblRegionVal   = valeurs[6];
+        lblRoleVal     = valeurs[7];
+        lblEmbaucheVal = valeurs[8];
 
-    private JButton creerBoutonFermer() {
-        JButton btn = new JButton("Fermer");
-        btn.setBounds(186, 329, 100, 24);
-        btn.setBackground(new Color(52, 73, 94));
-        btn.setForeground(Color.WHITE);
-        btn.setFocusPainted(false);
-        btn.setFont(new Font("Arial", Font.BOLD, 13));
-        btn.addActionListener(e -> dispose());
-        return btn;
-    }
+        if ("S".equals(idRoleConnecte)) {
+            JButton btnModifier = new JButton("Modifier");
+            btnModifier.setBounds(130, 365, 90, 25);
+            btnModifier.addActionListener(e ->
+                new ModifVisiteur(this, parentListe, visiteur).setVisible(true));
+            getContentPane().add(btnModifier);
+        }
 
-    // -------------------------------------------------------------------------
-    // Remplissage des données
-    // -------------------------------------------------------------------------
+        JButton btnFermer = new JButton("Fermer");
+        btnFermer.setBounds(240, 365, 90, 25);
+        btnFermer.addActionListener(e -> dispose());
+        getContentPane().add(btnFermer);
+    }
 
     private void remplirChamps() {
-        lblNomPrenom.setText(visiteur.getNom() + " " + visiteur.getPrenom());
-        lblIdVal.setText(valeurOuTiret(visiteur.getIdUtilisateur()));
-        lblEmailVal.setText(valeurOuTiret(visiteur.getEmail()));
-        lblAdresseVal.setText(valeurOuTiret(visiteur.getAdressePo()));
-        lblMobileVal.setText(valeurOuTiret(visiteur.getNumTel()));
-        lblFixeVal.setText(valeurOuTiret(visiteur.getNumTelFixe()));
-
-        lblVilleVal.setText(visiteur.getVille() != null
-            ? visiteur.getVille() + " " + visiteur.getCp() : "—");
-
-        lblRegionVal.setText(visiteur.getRegion() != null
-            ? visiteur.getRegion().getNomRegion() : "—");
-
-        lblRoleVal.setText(visiteur.getRole() != null
-            ? visiteur.getRole().getLibelleRole() : "—");
+        setTitle("Fiche — " + visiteur.getPrenom() + " " + visiteur.getNom());
+        lblNomPrenom.setText(visiteur.getPrenom() + " " + visiteur.getNom());
+        lblIdVal.setText(ou(visiteur.getIdUtilisateur()));
+        lblEmailVal.setText(ou(visiteur.getEmail()));
+        lblAdresseVal.setText(ou(visiteur.getAdressePo()));
+        lblMobileVal.setText(ou(visiteur.getNumTel()));
+        lblFixeVal.setText(ou(visiteur.getNumTelFixe()));
+        lblVilleVal.setText(ou(visiteur.getVille()) + " " + ou(visiteur.getCp()));
+        lblRegionVal.setText(visiteur.getRegion() != null ? visiteur.getRegion().getNomRegion() : "—");
+        lblRoleVal.setText(visiteur.getRole() != null ? visiteur.getRole().getLibelleRole() : "—");
+        lblEmbaucheVal.setText(visiteur.getDateEmbauche() != null
+                ? visiteur.getDateEmbauche().toString() : "—");
     }
 
-    // -------------------------------------------------------------------------
-    // Utilitaires UI
-    // -------------------------------------------------------------------------
-
-    private JLabel creerTitre(String texte) {
-        JLabel lbl = new JLabel(texte);
-        lbl.setFont(new Font("Arial", Font.BOLD, 12));
-        lbl.setForeground(new Color(52, 73, 94));
-        return lbl;
+    /** Appelé par ModifVisiteur après sauvegarde pour mettre à jour l'affichage. */
+    public void rafraichir(Utilisateur visiteurMisAJour) {
+        this.visiteur = visiteurMisAJour;
+        remplirChamps();
     }
 
-    private JLabel creerValeur() {
-        JLabel lbl = new JLabel();
-        lbl.setFont(new Font("Tahoma", Font.PLAIN, 10));
-        return lbl;
-    }
-
-    private String valeurOuTiret(String valeur) {
-        return (valeur != null && !valeur.isEmpty()) ? valeur : "—";
+    private String ou(String val) {
+        return (val != null && !val.isBlank()) ? val : "—";
     }
 }
